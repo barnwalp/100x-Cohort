@@ -31,7 +31,7 @@
 	<script src='videojs-markers.js'></script>
 
 	<script>
-		var player = videojs('my-video');
+		const player = videojs('my-video');
 		const markers = [
 			{ time: 0, text: 'Beginning' },
 			{ time: 7, text: 'Welcome' },
@@ -48,20 +48,20 @@
 		})
 
 		function scrollToSegment() {
-			for (var i = 0; i < markers.length; i++) {
-				var item = document.createElement("li");
+			for (let i = 0; i < markers.length; i++) {
+				let item = document.createElement("li");
 				item.setAttribute("data-index", i);
-				var link = document.createElement("a");
+				let link = document.createElement("a");
 				link.href = "#";
 				link.textContent = markers[i].text;
 				item.appendChild(link);
 				document.getElementById("marker-list").appendChild(item);
 			}
 
-			var markerListItems = document.querySelectorAll("#marker-list li");
+			const markerListItems = document.querySelectorAll("#marker-list li");
 			markerListItems.forEach(function(item) {
 				item.addEventListener("click", function() {
-					var index = parseInt(item.getAttribute("data-index"));
+					let index = parseInt(item.getAttribute("data-index"));
 					player.currentTime(markers[index].time);
 				});
 			});
