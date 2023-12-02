@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link href="https://vjs.zencdn.net/8.6.1/video-js.css" rel="stylesheet" />
+	<link href="videojs.markers.css" rel="stylesheet">
+</head>
+
+<body>
+  <video
+    id="my-video"
+    class="video-js"
+    controls
+    preload="auto"
+    width="640"
+    height="264"
+		poster="poster.png"
+    data-setup="{}"
+  >
+    <source src="Incredible_India.mp4" type="video/mp4" />
+    <p class="vjs-no-js">
+      <a href="https://videojs.com/html5-video-support/" target="_blank"
+        >supports HTML5 video</a
+      >
+    </p>
+  </video>
+
+	<ul id="marker-list">
+	</ul>
+  <script src="https://vjs.zencdn.net/8.6.1/video.min.js"></script>
+	<script src='videojs-markers.js'></script>
+
+	<script>
+		var player = videojs('my-video');
+		const markers = [
+			{ time: 0, text: 'Beginning' },
+			{ time: 7, text: 'Welcome' },
+			{ time: 21, text: 'Beach' },
+			{ time: 40, text: 'Fort' },
+			{ time: 55, text: 'Incredible India' },
+		];
+		player.aspectRatio('16:9');
+		player.markers({
+			markerStyle: {
+				'width': '8px',
+				'background-color': 'red'
+			},
+			markers: markers
+		})
+
+		function scrollToSegment() {
+			for (var i = 0; i < markers.length; i++) {
+				var item = document.createElement("li");
+				item.setAttribute("data-index", i);
+				var link = document.createElement("a");
+				link.href = "#";
+				link.textContent = markers[i].text;
+				item.appendChild(link);
+				document.getElementById("marker-list").appendChild(item);
+			}
+
+			var markerListItems = document.querySelectorAll("#marker-list li");
+			markerListItems.forEach(function(item) {
+				item.addEventListener("click", function() {
+					var index = parseInt(item.getAttribute("data-index"));
+					player.currentTime(markers[index].time);
+				});
+			});
+		}
+
+		document.addEventListener("DOMContentLoaded", scrollToSegment);
+	</script>
+</body>
+</html>
